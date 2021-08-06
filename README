@@ -1,0 +1,13 @@
+Proyecto para la cara ejecutiva de la empresa ASCYKL
+
+
+Backend:
+yarn install
+yarn dev
+
+
+Fronted:
+
+cd frontend
+yarn install
+yarn dev

@@ -1,5 +1,4 @@
-Proyecto para la cara ejecutiva de la empresa ASCYKL
-
+Aplicación web E-commerce de la empresa ASCYKL desarrollada bajo el stack MEVN
 
 Backend:
 yarn install
@@ -11,3 +10,6 @@ Fronted:
 cd frontend
 yarn install
 yarn dev
+
+
+Autor: Rayco García Fernández

@@ -1,0 +1,40 @@
+{
+  "name": "ASCYKL",
+  "title": "Service & Representation International",
+  "descr": "EXPORT-IMPORT COMPANY",
+  "acro": "S.E.N.C",
+  "search": "Buscar",
+  "nav":{
+    "home":"Inicio",
+    "about":"Acerca",
+    "contact":"Contáctenos",
+    "store":"Tienda"
+  },
+  "home":{
+    "about":"Somos una empresa de Importación / Exportación con cuenta bancaria anclada en el RBC Royal Bank de Canadá",
+    "more":"Conocer más",
+    "about_us":{
+      "professionalism":{
+        "title":"Profesionalidad",
+        "desc":"Nuestro personal, altamente calificado se caracteriza por un alto nivel de profesioanlidad, que se enfoca en cumplir con creces las exigencias de nuestros clientes"
+      },
+      "competitiveness":{
+        "title":"Competividad",
+        "desc":"No enfocamos en siempre estar por encima de nuestra competencia, mostrando alto nivel de competividad y un alto nivel de atención a nuetsros clientes"
+      },
+      "quality":{
+        "title":"Calidad",
+        "desc":"El alto nivel de calidad es exigencia en cada uno de nuestros produtos y servicios, lo que nos hace una empresa a tener en cuenta. Forma parte ya de nuestra familia."
+      }
+    },
+    "services":{
+      "title": "Nuestros servicios",
+      "export": "Exportamos lo que neceistes en un rango de tiempo absequible y en precios considerablemente bajos. La profesionalidad es nuestro lema para cada uno de nuestros servicios",
+      "products": "Vendemos productos de alta calidad a pedidos de nuestros clientes, usted suéñelo, nostros lo hacemos realidad",
+      "import": "Si está buscando una forma de poder importar algina mercancia o producto, no busque más, nostros somos la solución óptima a su necesidad. "
+    }
+  },
+  "store":{
+    "more": "Ver más"
+  }
+}

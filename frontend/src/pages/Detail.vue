@@ -6,6 +6,7 @@
         <v-col cols="12" md="6" class="d-flex flex-column align-center justify-center">
           <v-card class="text-justify mb-5">
             <v-card-title>
+              <input type="file" @change="handleImage" accept="image/*" >
               Producto único nombre
               <v-spacer></v-spacer> 
               $67.89
@@ -74,6 +75,7 @@
 import navigation from "../components/store/Navigation";
 import foote from "../components/home/Footer";
 import { mapState, mapMutations } from 'vuex'
+// import axios from "axios"
 
 export default {
   name: "App",
@@ -94,6 +96,7 @@ export default {
       "assets/img/bgDrawer.jpg"
     ],
     imageSelected:0,
+    newImage:''
   }),
   computed: {
     ...mapState('app',['searched']),
@@ -145,6 +148,24 @@ export default {
         this.imageSelected++
       else
         this.imageSelected = 0
+    },
+    handleImage(e){
+      const selImage = e.target.files[0];
+      this.createBase64Image(selImage)
+      // console.log(selImage);
+    },
+    createBase64Image(fileObject){
+      const reader = new FileReader();
+      reader.onload = (e) =>{
+        this.newImage = e.target.result
+
+        // axios.post('http://localhost:3000/api/v1/product',{image:this.newImage}).then(res=>{
+        //   console.log(res.data)
+        // })
+        console.log(this.newImage)
+      };
+
+      reader.readAsDataURL(fileObject);
     }
   },
 };

@@ -29,10 +29,10 @@
       </v-row>
       <v-row no-gutters>
         <!-- categorias en sm to lg -->
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="12">
             <categories />
         </v-col>
-        <v-col md="9" cols="12">
+        <v-col md="12" cols="12">
             <!-- component products -->
             <products />
             <!-- pagination -->

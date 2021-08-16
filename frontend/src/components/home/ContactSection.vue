@@ -1,24 +1,22 @@
 <template>
   <section class="pb-8" id="contact">
-    <v-container fluid>
+    <v-container fluid class="mb-5">
       <v-row align="center" justify="center">
         <v-col cols="10">
           <v-row justify="center">
             <v-col cols="12" sm="5">
-              <h1 class="font-weight-light display-1">Contate-nos</h1>
+              <h1 class="font-weight-light display-1">Contacto</h1>
               <h3 class="font-weight-light mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-                explicabo commodi quisquam asperiores dolore ad enim provident
-                veniam perferendis voluptate, perspiciatis.
+                Puede contactarnos en cualquier momento, nuestros especialistas le atenderán
               </h3>
               <h3 class="font-weight-light mt-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing.
+                Radicamos en <code>dirección</code>
               </h3>
               <h3 class="font-weight-light mt-3">
-                Telefone: +xx (xx) xxxxx-xxxx
+                Teléfonos: +53 (xx) xxxxx-xxxx
               </h3>
               <h3 class="font-weight-light">
-                Email: email@email.com
+                Email: soporte@ascykl.com
               </h3>
             </v-col>
             <v-col cols="12" sm="7">
@@ -26,21 +24,21 @@
                 <v-text-field
                     v-model="name"
                     :rules="nameRules"
-                    label="Nome"
+                    label="Nombre"
                     required
                 ></v-text-field>
 
                 <v-text-field
                     v-model="email"
                     :rules="emailRules"
-                    label="E-mail"
+                    label="Correo"
                     required
                 ></v-text-field>
 
                 <v-textarea
                     v-model="textArea"
                     :rules="textAreaRules"
-                    label="Mensagem"
+                    label="Mensaje"
                     required
                 />
 

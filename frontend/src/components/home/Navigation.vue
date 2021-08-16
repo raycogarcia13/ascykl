@@ -38,6 +38,16 @@
             }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item
+         to="/store"
+        >
+          <v-list-item-icon class="justify-center">
+            <v-icon>mdi-store</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="subtitile-1">Tienda</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -46,7 +56,7 @@
       :color="color"
       :flat="flat"
       dark
-      class="px-15"
+      class="px-1"
       :class="{ expand: flat }"
     >
       <v-toolbar-title>
@@ -73,6 +83,9 @@
         </v-btn>
         <v-btn rounded outlined text @click="$vuetify.goTo('#contact')">
           <span class="mr-2">{{$t('nav.contact')}}</span>
+        </v-btn>
+        <v-btn icon text class="mr-n7">
+          <v-icon>mdi-account</v-icon>
         </v-btn>
       </div>
     </v-app-bar>

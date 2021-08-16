@@ -1,6 +1,6 @@
 <template>
   <div class="mb-5">
-    <v-sheet class="mx-auto d-md-none" >
+    <v-sheet class="mx-auto" >
       <v-slide-group
         multiple
         show-arrows
@@ -25,7 +25,7 @@
       </v-slide-group>
     </v-sheet>
             
-    <v-card flat class="ma-0 pa-0 d-none d-md-flex flex-column">
+    <!-- <v-card flat class="ma-0 pa-0 d-none d-md-flex flex-column">
         <v-card-text class="scroll-y-categories">
             <v-list rounded>
                   <v-list-item-group
@@ -48,7 +48,7 @@
                   </v-list-item-group>
               </v-list>
         </v-card-text>
-    </v-card>
+    </v-card> -->
   </div>
 </template>
 
@@ -58,9 +58,11 @@ export default {
     return {
       selectedItem: [],
       items: [
-        { text: 'Real-Time', icon: 'mdi-clock' },
-        { text: 'Audience', icon: 'mdi-account' },
-        { text: 'Conversions', icon: 'mdi-flag' }
+        { text: 'Transporte', icon: 'mdi-car' },
+        { text: 'Comestibles', icon: 'mdi-account' },
+        { text: 'Hogar', icon: 'mdi-flag' },
+        { text: 'Electrodomésticos', icon: 'mdi-cog' },
+        { text: 'Otros', icon: 'mdi-clock' },
       ],
     };
   },

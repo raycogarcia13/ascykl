@@ -1,5 +1,5 @@
 {
-  "name": "ecomerce",
+  "name": "ASCYKL",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,14 +7,23 @@
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "ecommerce",
+    "landing page"
+  ],
+  "author": "Rayco García Fernández",
   "license": "ISC",
   "dependencies": {
+    "base64-img": "^1.0.4",
+    "body-parser": "^1.19.0",
     "concurrently": "^6.2.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "fs": "^0.0.1-security",
+    "lodash": "^4.17.21",
+    "mime": "^2.5.2",
     "mongoose": "^5.13.3",
     "nodemon": "^2.0.12",
     "path": "^0.12.7"

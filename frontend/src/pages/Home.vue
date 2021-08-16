@@ -4,8 +4,8 @@
     <v-main class="pt-0">
       <home />
       <about />
-      <download />
-      <pricing />
+      <store />
+      <!-- <pricing /> -->
       <contact />
     </v-main>
     <v-scale-transition>
@@ -41,9 +41,10 @@ import navigation from "../components/home/Navigation";
 import foote from "../components/home/Footer";
 import home from "../components/home/HomeSection";
 import about from "../components/home/AboutSection";
-import download from "../components/home/DownloadSection";
-import pricing from "../components/home/PricingSection";
+import store from "../components/home/StoreSection";
+// import pricing from "../components/home/PricingSection";
 import contact from "../components/home/ContactSection";
+// import axios from "axios"
 
 export default {
   name: "App",
@@ -53,8 +54,8 @@ export default {
     foote,
     home,
     about,
-    download,
-    pricing,
+    store,
+    // pricing,
     contact,
   },
 

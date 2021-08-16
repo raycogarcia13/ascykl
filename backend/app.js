@@ -28,6 +28,8 @@ if(process.env.NODE_ENV == 'PRODUCTION'){
 // app.use('/',express.static("../frontend/public"))
 const products = require("./routes/store/products")
 app.use('/api/v1',products);
+const auth = require("./routes/auth")
+app.use('/api/v1',auth);
 
 // error middleware
 const errorMiddleware = require('./middlewares/errors')

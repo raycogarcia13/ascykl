@@ -33,16 +33,9 @@ exports.store = catchAsyncErrors(async (req,res,next) =>{
         message:"product.created",
         data:newed
     })
-
-    // let base64Data = image.split(',')[1];
-    // var filepath = await base64Img.imgSync(image, path.join(__dirname,"../uploads/"),Date.now())
-    
-    // const pathArr = filepath.split('/');
-    // const name = pathArr[pathArr.length -1]
-    // res.json({url:`http://localhost:3000/${name}`,name,base64Data})
 })
 
-//get all => /api/v1/diamters?keyword=standard
+//get all => /api/v1/product?keyword=standard
 exports.get = catchAsyncErrors(async (req,res,next) =>{
     const apiFeatures = new APIFeatures(Product.find(),req.query.filter,'name')
         .search();
@@ -54,7 +47,7 @@ exports.get = catchAsyncErrors(async (req,res,next) =>{
     })
 })
 
-// // get one diameter by id : /api/v1/diameter/:id 
+// // get one product by id : /api/v1/diameter/:id 
 exports.find = catchAsyncErrors( async (req,res,next) =>{
     const data = await Product.findById(req.params.id);
     
@@ -68,7 +61,7 @@ exports.find = catchAsyncErrors( async (req,res,next) =>{
     })
 })
 
-// // update one diameter by id : /api/v1/diameter/:id 
+// // update one product by id : /api/v1/diameter/:id 
 exports.update = catchAsyncErrors(async (req,res,next) =>{
     let data = await Product.findById(req.params.id);
     
@@ -82,6 +75,21 @@ exports.update = catchAsyncErrors(async (req,res,next) =>{
         useFindAndModify: false
     });
 
+    res.json({
+        status:"success",
+        data
+    })
+})
+
+// delete one product by id : /api/v1/diameter/:id 
+exports.remove = catchAsyncErrors(async (req,res,next) =>{
+    let data = await Product.findById(req.params.id);
+    
+    if(!data){
+        return next(new ErrorHandler('Product not found',404)) 
+    }
+   data.createdAt = Date.now;
+   data.save();
     res.json({
         status:"success",
         data

@@ -8,7 +8,7 @@ const base64Img = require("base64-img")
 const asyncForEach = require("../utils/asyncForEach")
 
 exports.store = catchAsyncErrors(async (req,res,next) =>{
-    const {images,name,price,description,category,stock} = req.body;
+    const {images,name,price,description,category,subcategory,stock} = req.body;
 
     let imgSrc = [];
     await asyncForEach(images, async (item,i)=>{
@@ -25,6 +25,7 @@ exports.store = catchAsyncErrors(async (req,res,next) =>{
         description,
         images: imgSrc,
         category,
+        subcategory,
         stock
     })
 
@@ -37,12 +38,18 @@ exports.store = catchAsyncErrors(async (req,res,next) =>{
 
 //get all => /api/v1/product?keyword=standard
 exports.get = catchAsyncErrors(async (req,res,next) =>{
-    const apiFeatures = new APIFeatures(Product.find(),req.query.filter,'name')
-        .search();
+    const resPerPage = Number(process.env.RES_PER_PAGE);
+    const productCount = await Product.countDocuments();
+    const apiFeatures = new APIFeatures(Product.find(),req.query,'name')
+        .search()
+        .filter()
+        .pagination(resPerPage);
+
     const all = await apiFeatures.query
     res.json({
         status:"success",
         count: all.length,
+        total: productCount,
         data: all
     })
 })

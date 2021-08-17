@@ -33,6 +33,10 @@ const dataSchema = new Schema({
         type: String,
         required: [true, "product.category.required"]
     },
+    subcategory:{
+        type: String,
+        required: [true, "product.category.required"]
+    },
     stock:{
         type: Number,
         required: [true, "product.stock.required"],

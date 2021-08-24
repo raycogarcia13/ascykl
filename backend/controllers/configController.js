@@ -2,7 +2,7 @@ const Config = require('../models/config');
 
 exports.init = async (req,res,next) =>{
     const config = await Config.findOne({key:"database"});
-    if(config && config.value == "true"){
+    if(config && config.value == "false"){
         res.json({
             status:"failed",
             message:"Project is alredy config"

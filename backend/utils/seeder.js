@@ -7,7 +7,7 @@ const seedUsers = async ()=>{
         const datas = require('../datas/users');
         console.log("Cleaning Users");
         await Users.deleteMany();
-        await Users.insertMany(datas);
+        await Users.create(datas);
         console.log(`${datas.length} Users inserted`);
         return true;
     }catch(error){

@@ -4,18 +4,14 @@
     <v-main class="ma-5 fill-height">
       <v-row class="fill-height">
         <v-col cols="12" md="6" class="d-flex flex-column align-center justify-center">
-          <v-card class="text-justify mb-5">
+          <v-card class="text-justify mb-5" width="100%">
             <v-card-title>
-              <input type="file" @change="handleImage" accept="image/*" >
-              Producto único nombre
+              {{textI18(product).name}}
               <v-spacer></v-spacer> 
-              $67.89
+              ${{product.price}}
             </v-card-title>
               <v-card-text>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente rem praesentium sint aspernatur esse, voluptatum expedita suscipit libero dolorem iste! Porro aspernatur qui a enim laudantium? Architecto dolorem quisquam velit?
-              </v-card-text>
-              <v-card-text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae dolorum repellat dolorem consequuntur non fuga quibusdam aperiam est amet sapiente blanditiis, odio perferendis rem maiores quasi sunt, voluptas libero voluptatum.
+                {{textI18(product).description}}
               </v-card-text>
               <v-divider></v-divider>
             <v-card-actions>
@@ -41,10 +37,10 @@
         </v-col>
         <v-col cols="12" md="6" class="d-flex flex-column justify-center align-center">
          
-           <v-img :height="'30vh'" :src="require('@/'+images[imageSelected])" cover
+           <v-img :class="{'mt-n15':product.images.length==1}" :max-height="product.images.length>1?'30vh':'50vh'" v-if="product.images.length" :src="`${$uri}/products/${product.images[imageSelected].image_src}`" cover
             class="d-flex align-center"
            >
-           <v-app-bar dense elevation="0" color="rgba(255,255,255,0)">
+           <v-app-bar v-if="product.images.length>1" dense elevation="0" color="rgba(255,255,255,0)">
              <v-btn icon color="white" @click="prevPicture">
                <v-icon>mdi-arrow-left</v-icon>
              </v-btn>
@@ -54,10 +50,10 @@
              </v-btn>
            </v-app-bar>
            </v-img>
-           <v-card flat tile class="mt-5 d-flex justify-space-between">
-             <v-card :width="widthImage" class="pa-2"  flat v-for="(item,i) in images" :key="i" @click="imageSelected = i" >
+           <v-card v-if="product.images.length>1" flat tile class="mt-5 d-flex justify-space-between">
+             <v-card :width="widthImage" class="pa-2"  flat v-for="(item,i) in product.images" :key="i" @click="imageSelected = i" >
                 <v-img 
-                  :src="require('@/'+item)" 
+                  :src="`${$uri}/products/${item.image_src}`" 
                   :height="'20vh'" 
                   cover 
                   :gradient="i!=imageSelected?'to bottom right, rgba(255,255,255,.60), rgba(0,0,0,.7)':''"
@@ -79,30 +75,30 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: "App",
-
+  props:[
+    'id'
+  ],
   components: {
     navigation,
     foote
   },
 
   data: () => ({
-    fab: null,
-    color: "",
-    flat: null,
-    page:1,
     images:[
       "assets/img/bghero1.jpg",
       "assets/img/bgHero.jpg",
       "assets/img/bgDrawer.jpg"
     ],
+    product:{
+      images:[]
+    },
     imageSelected:0,
-    newImage:''
   }),
   computed: {
     ...mapState('app',['searched']),
     widthImage(){
-      console.log(100/this.images.lenght+'%')
-      return 100/this.images.length+'%';
+      console.log(100/this.product.images.lenght+'%')
+      return 100/this.product.images.length+'%';
     }
   },
 
@@ -129,44 +125,38 @@ export default {
   methods: {
     ...mapMutations('app',['TOGGLE_SEARCH']),
 
-    onScroll(e) {
-      if (typeof window === "undefined") return;
-      const top = window.pageYOffset || e.target.scrollTop || 0;
-      this.fab = top > 60;
-    },
-    toTop() {
-      this.$vuetify.goTo(0);
-    },
     prevPicture(){
+      if(!this.product.images)
+        return
+
       if(this.imageSelected-1 >= 0)
         this.imageSelected--
       else
-        this.imageSelected = this.images.length-1
+        this.imageSelected = this.picture.images.length-1
     },
     nextPicture(){
-      if(this.imageSelected+1 < this.images.length)
+      if(!this.product.images)
+        return
+
+      if(this.imageSelected+1 < this.picture.images.length)
         this.imageSelected++
       else
         this.imageSelected = 0
     },
-    handleImage(e){
-      const selImage = e.target.files[0];
-      this.createBase64Image(selImage)
-      // console.log(selImage);
+    loadProduct(){
+      let uri = `/product/${this.id}`;
+      this.$axios.get(uri).then(res=>{
+        this.product = res.data.data
+        console.log(this.product)
+      })
     },
-    createBase64Image(fileObject){
-      const reader = new FileReader();
-      reader.onload = (e) =>{
-        this.newImage = e.target.result
-
-        // axios.post('http://localhost:3000/api/v1/product',{image:this.newImage}).then(res=>{
-        //   console.log(res.data)
-        // })
-        console.log(this.newImage)
-      };
-
-      reader.readAsDataURL(fileObject);
-    }
+    textI18(item){
+      let curr = this.$i18n.locale;
+      return item.texts.find(it=>it.lang == curr)
+    },
+  },
+  mounted() {
+    this.loadProduct();
   },
 };
 </script>

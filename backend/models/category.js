@@ -1,15 +1,23 @@
 const { Schema, model, Types } = require("mongoose");
 
 const dataSchema = new Schema({
-    name:{
+    texts:[
+    {
+        lang:{
+            type: String,
+            required: true
+            },
+        name:{
+            type: String,
+            required: [ true, "category.name.required"],
+            trim: true,
+            maxLength: [100,'category.name.exceded']
+        }
+    }
+    ],
+    image:{
         type: String,
-        required: [ true, "category.name.required"],
-        trim: true,
-        maxLength: [100,'category.name.exceded']
-    },
-    description:{
-        type: String,
-        required: [ true, "category.description.required"],
+        required: [true, "category.image.required"]
     }
 });
 

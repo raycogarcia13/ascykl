@@ -3,14 +3,14 @@ const router = express.Router();
 
 const { store, get, find, update, remove } = require('../../controllers/productController')
 
-const { isAuthenticatedUser } = require("../../middlewares/auth")
+const { isAuthenticatedUser, authorizeRole } = require("../../middlewares/auth")
 // router.post('/',store)
 router.get('/products',get)
-router.post('/product', isAuthenticatedUser , store);
+router.post('/product', isAuthenticatedUser, authorizeRole('Admin'), store);
 
 router.route('/product/:id')
         .get(find)
-        .put(isAuthenticatedUser,update)
-        .delete(isAuthenticatedUser,remove)
+        .put(isAuthenticatedUser,authorizeRole('Admin'),update)
+        .delete(isAuthenticatedUser,authorizeRole('Admin'),remove)
 
 module.exports = router

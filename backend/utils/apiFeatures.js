@@ -1,15 +1,19 @@
 class APIFeatures {
-    constructor(query, queryString, prop) {
+    constructor(query, queryString) {
         this.query = query;
         this.queryString = queryString;
     }
 
     search() {
         const keyword = this.queryString.keyword ? {
-            name: {
+            'texts.name': {
                 $regex: this.queryString.keyword,
                 $options: `i`
             }
+            // 'texts.name': {
+            //     $regex: this.queryString.keyword,
+            //     $options: `i`
+            // }
         }: {}
 
         this.query = this.query.find({ ...keyword })

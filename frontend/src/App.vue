@@ -4,12 +4,26 @@
 
 <script>
 
+import { mapState, mapActions } from 'vuex'; 
 export default {
   name: 'App',
-
-  data: () => ({
-    //
-  }),
+  computed: {
+    ...mapState('app',['windowS'])
+    
+  },
+  methods: {
+    ...mapActions('app',['initWindows'])
+  },
+  mounted() {
+    if(!this.windwowS)
+    {
+      const size = {
+        width: window.innerWidth,
+        height: window.innerHeight
+      }
+      this.initWindows(size)
+    }
+  },
 };
 </script>
 <style>

@@ -1,17 +1,21 @@
 const { Schema, model, Types } = require("mongoose");
 
 const dataSchema = new Schema({
-    name:{
-        type: String,
-        required: [ true, "subcategory.name.required"],
-        trim: true,
-    },
-    description:{
-        type: String,
-        required: [ true, "subcategory.description.required"],
-    },
-    category_id:{
-        type: Types.ObjectId, required: true, refPath: 'Category'
+    texts:[
+        {
+            lang:{
+                type:"String",
+                required: true
+            },
+            name:{
+                type: String,
+                required: [ true, "subcategory.name.required"],
+                trim: true,
+            }
+        }
+    ],
+    category:{
+        type: Types.ObjectId, required: true, ref: 'Category'
     }
 });
 

@@ -8,12 +8,11 @@ const path = require("path")
 
 app.set('port',process.env.PORT || 3000)
 //middlewares
-// app.use(express.json())
-const cookieParser = require('cookie-parser') 
-app.use(cors())
+const cookieParser = require('cookie-parser');
+const corsOption = require('./config/cors');
+app.use(cors(corsOption))
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(cookieParser())
-// app.use(bodyParser.urlencoded({extended: true}));
 
 // statics
 app.use(express.static(path.join(__dirname, "uploads")));
@@ -30,8 +29,12 @@ const products = require("./routes/store/products")
 app.use('/api/v1',products);
 const auth = require("./routes/auth")
 app.use('/api/v1',auth);
+const categ = require("./routes/store/category")
+app.use('/api/v1',categ);
 const order = require("./routes/store/orders")
 app.use('/api/v1',order);
+const admin = require("./routes/admin")
+app.use('/api/v1/admin',admin);
 
 // error middleware
 const errorMiddleware = require('./middlewares/errors')

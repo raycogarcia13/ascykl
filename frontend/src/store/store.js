@@ -10,11 +10,4 @@ export default new Vuex.Store({
     modules: {
       app
     },
-    state: {
-    },
-    mutations: {
-    },
-    actions: {
-        
-    }
 })

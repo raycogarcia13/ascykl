@@ -24,12 +24,22 @@ const dataSchema = new Schema({
     role:{
         type: String,
         default: 'User',
-        enum: ['User', 'Administrator', 'Account']
-
+        enum: ['User', 'Admin', 'Account']
+    },
+    avatar:{
+        type: String,
     },
     createdAt:{
         type: Date,
         default: Date.now()
+    },
+    status:{
+        type: String,
+        default: 'Verify',
+        enum: ['Verify', 'Available', 'Expired','Disabled']
+    },
+    verifyPin: {
+        type:String
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,

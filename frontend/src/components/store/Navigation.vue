@@ -42,7 +42,6 @@
     </v-navigation-drawer>
 
     <v-app-bar
-      app
       :color="color"
       :flat="flat"
       dark
@@ -58,7 +57,6 @@
     </router-link>
           <v-spacer></v-spacer>
       <template v-if="isMd()">
-          <v-slide-x-reverse-transition> 
              <v-text-field
               solo
               rounded
@@ -66,24 +64,36 @@
               hide-details
               dense
               style="max-width:30%"
-              v-if="searched"
               color="purple darken-2"
               :label="$t('search')"
               append-icon="mdi-send"
               @click:append="search"
             ></v-text-field>
-          </v-slide-x-reverse-transition>
-            <v-btn icon @click="TOGGLE_SEARCH">
-              <v-icon>mdi-search-web</v-icon>
-            </v-btn>
       </template>
+      <v-spacer></v-spacer>
       <div  v-if="!isXs">
-        <v-btn rounded text to="/">
-          <span>{{$t('nav.home')}}</span>
-        </v-btn>
-        <v-btn rounded icon @click="()=>{alert('si')}">
-          <v-icon>mdi-cart</v-icon>
-        </v-btn>
+         <v-menu open-on-hover bottom :offset-y="true" :offset-x="false">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn rounded text v-on="on" v-bind="attrs">
+                 <v-img class="mr-1" max-width="20" :src="require(`@/assets/i18n/${$i18n.locale}.png`)" />
+                    <v-icon small class="ml-1">mdi-chevron-down</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list dense>
+                <v-list-item v-for="(item,i) in $i18n.availableLocales" :key="i" class="cursor" @click="changeLocale(item)">
+                    <v-list-item-title width="10px" class="pointer">
+                        <v-img class="float-left mr-2" max-width="20" :src="require(`@/assets/i18n/${item}.png`)" />
+                    </v-list-item-title>
+                          <span class="caption">{{item.toUpperCase()}}</span>
+                        <v-list-item-action>
+                          <v-icon size="10" class="primary--text" v-if="item==$i18n.locale">mdi-check</v-icon>
+                        </v-list-item-action>
+                </v-list-item>
+            </v-list>
+        </v-menu>
+        <menuCart v-if="auth" :items="cartItems" />
+        <login-btn />
       </div>
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
@@ -95,9 +105,15 @@
 </template>
 
 <script>
+import menuCart from "./CartMenu.vue"
 import {mapState,mapMutations} from 'vuex'
+import LoginBtn from '../home/LoginBtn.vue';
 
 export default {
+  components:{
+    menuCart,
+    LoginBtn
+  },
   data: () => ({
     drawer: null,
     isXs: false,
@@ -106,10 +122,22 @@ export default {
       ["mdi-information-outline", "Sobre", "#features"],
       ["mdi-email-outline", "Contatos", "#contact"],
     ],
-    // searched:false
+    cartItems:[{
+      name:"Perro caliente",
+      product:"8761987987",
+      picture: "http://localhost:3000/6767898",
+      price:"45.7",
+      quantity: "5"
+    },{
+      name:"Bicicleta",
+      product:"98754",
+      picture: "http://localhost:3000/6767898",
+      price:"152",
+      quantity: "1"
+    }]
   }),
   computed: {
-    ...mapState('app',['searched'])
+    ...mapState('app',['searched','auth'])
   },
   props: {
     color: String,
@@ -117,7 +145,10 @@ export default {
   },
   methods: {
     ...mapMutations('app',['TOGGLE_SEARCH']),
-
+    changeLocale(item){
+      this.$i18n.locale = item;
+      localStorage.setItem('lang',item);
+    },
     onResize() {
       this.isXs = window.innerWidth < 850;
     },

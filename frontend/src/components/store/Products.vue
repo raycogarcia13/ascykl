@@ -3,12 +3,12 @@
            <v-container>
               <v-row>
                 <v-col
-                  v-for="n in 9"
-                  :key="n"
+                  v-for="item in products"
+                  :key="item._id"
                   cols="12"
-                  md="4"
+                  md="3"
                 >
-                  <product />
+                  <product :product="item"/>
                 </v-col>
               </v-row>
            </v-container>
@@ -21,6 +21,9 @@ export default {
   components:{
     product
   },
+  props:[
+    "products"
+  ],
   data() {
     return {
     };

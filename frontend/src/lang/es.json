@@ -4,11 +4,37 @@
   "descr": "EXPORT-IMPORT COMPANY",
   "acro": "S.E.N.C",
   "search": "Buscar",
+  "loading":"Cargando..., espere por favor",
+  "cancel": "Cancelar",
+  "save": "Salvar",
   "nav":{
     "home":"Inicio",
     "about":"Acerca",
     "contact":"Contáctenos",
-    "store":"Tienda"
+    "store":"Tienda",
+    "login": "Entrar",
+    "logout": "Salir"
+  },
+  "login":{
+    "email": "Correo",
+    "password": "Contraseña"
+  },
+  "register":{
+    "email": "Correo",
+    "name": "Nombre y apellidos",
+    "password": "Contraseña",
+    "repeat_password": "Repita la contraseña",
+    "conditions": "Acepto las condiciones y términos de uso de la aplicación",
+    "register": "Registrarse"
+  },
+  "auth":{
+    "error":"Credeciales inválidas",
+    "sended": "Correo enviado",
+    "status":{
+      "Verify":"Debe verificar su usuario con el pin mandado a su correo",
+      "Expired":"Su contraseña ha expirado, por favor cámbiela",
+      "Disabled":"Su usuario está desabilitado por temas administrativos"
+    }
   },
   "home":{
     "about":"Somos una empresa de Importación / Exportación con cuenta bancaria anclada en el RBC Royal Bank de Canadá",
@@ -36,5 +62,33 @@
   },
   "store":{
     "more": "Ver más"
+  },
+  "admin":{
+    "user":{
+      "delete": "Está seguro de querer eliminar este usuario"
+    },
+    "products":{
+      "title": "Gestión de Productos",
+      "new": "Insertar Producto",
+      "edit": "Editar Producto",
+      "name": "Nombre del producto",
+      "description": "Descripción",
+      "images":"Imágenes del producto",
+      "stock":"Cantidad existente",
+      "price": "Precio",
+      "category":"Categoría",
+      "subcategory":"Grupo"
+    },
+    "category":{
+      "title": "Gestión de categorías",
+      "new": "Insertar Categoría",
+      "edit": "Editar Categoría",
+      "created": "Categoría creada"
+    },
+    "subcategory":{
+      "new": "Insertar Grupo",
+      "edit": "Editar grupo",
+      "created": "Grupo creado"
+    }
   }
 }

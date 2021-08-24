@@ -12,11 +12,14 @@ Vue.config.productionTip = false
 
 Vue.use({
     install (Vue) {
-    Vue.prototype.$axios = axios
+      Vue.prototype.$axios = axios
+      Vue.prototype.$uri = "http://localhost:3000/"
   }
 })
 
 Vue.use(VueI18n);
+
+store.dispatch('app/initApp');
 
 new Vue({
   vuetify,

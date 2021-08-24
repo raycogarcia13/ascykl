@@ -45,7 +45,7 @@
             <v-icon>mdi-store</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="subtitile-1">Tienda</v-list-item-title>
+            <v-list-item-title class="subtitile-1">{{$t('nav.store')}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -72,6 +72,28 @@
         v-if="isXs"
       />
       <div v-else>
+       
+       <v-menu open-on-hover bottom :offset-y="true" :offset-x="false">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn rounded text v-on="on" v-bind="attrs">
+                 <v-img class="mr-1" max-width="20" :src="require(`@/assets/i18n/${$i18n.locale}.png`)" />
+                    <v-icon small class="ml-1">mdi-chevron-down</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list dense>
+                <v-list-item v-for="(item,i) in $i18n.availableLocales" :key="i" class="cursor" @click="changeLocale(item)">
+                    <v-list-item-title width="10px" class="pointer">
+                        <v-img class="float-left mr-2" max-width="20" :src="require(`@/assets/i18n/${item}.png`)" />
+                    </v-list-item-title>
+                          <span class="caption">{{item.toUpperCase()}}</span>
+                        <v-list-item-action>
+                          <v-icon size="10" class="primary--text" v-if="item==$i18n.locale">mdi-check</v-icon>
+                        </v-list-item-action>
+                </v-list-item>
+            </v-list>
+        </v-menu>
+       
         <v-btn rounded text @click="$vuetify.goTo('#hero')">
           <span class="mr-2">{{$t('nav.home')}}</span>
         </v-btn>
@@ -84,9 +106,7 @@
         <v-btn rounded outlined text @click="$vuetify.goTo('#contact')">
           <span class="mr-2">{{$t('nav.contact')}}</span>
         </v-btn>
-        <v-btn icon text class="mr-n7">
-          <v-icon>mdi-account</v-icon>
-        </v-btn>
+         <login-btn />
       </div>
     </v-app-bar>
   </div>
@@ -104,7 +124,9 @@
 </style>
 
 <script>
+import LoginBtn from './LoginBtn.vue';
 export default {
+  components: { LoginBtn },
   data: () => ({
     drawer: null,
     isXs: false,
@@ -122,6 +144,11 @@ export default {
     onResize() {
       this.isXs = window.innerWidth < 850;
     },
+
+   changeLocale(item){
+      this.$i18n.locale = item;
+      localStorage.setItem('lang',item);
+    }
   },
 
   watch: {

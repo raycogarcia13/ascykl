@@ -8,11 +8,11 @@ const base64Img = require("base64-img")
 const asyncForEach = require("../utils/asyncForEach")
 
 exports.store = catchAsyncErrors(async (req,res,next) =>{
-    const {images,name,price,description,category,subcategory,stock} = req.body;
+    const {images,texts,price,category,subcategory,stock} = req.body;
 
     let imgSrc = [];
     await asyncForEach(images, async (item,i)=>{
-        var filepath = await base64Img.imgSync(item.data_url, path.join(__dirname,"../uploads/"),Date.now())
+        var filepath = await base64Img.imgSync(item.data_url, path.join(__dirname,"../uploads/products/"),Date.now())
         const pathArr = filepath.split('/');
         imgSrc.push({
             image_src: pathArr[pathArr.length -1]
@@ -20,12 +20,11 @@ exports.store = catchAsyncErrors(async (req,res,next) =>{
     });
 
     const newed = await Product.create({
-        name,
         price,
-        description,
         images: imgSrc,
         category,
         subcategory,
+        texts,
         stock
     })
 
@@ -40,7 +39,7 @@ exports.store = catchAsyncErrors(async (req,res,next) =>{
 exports.get = catchAsyncErrors(async (req,res,next) =>{
     const resPerPage = Number(process.env.RES_PER_PAGE);
     const productCount = await Product.countDocuments();
-    const apiFeatures = new APIFeatures(Product.find(),req.query,'name')
+    const apiFeatures = new APIFeatures(Product.find(),req.query)
         .search()
         .filter()
         .pagination(resPerPage);

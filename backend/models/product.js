@@ -1,22 +1,31 @@
 const { Schema, model, Types } = require("mongoose");
 
 const dataSchema = new Schema({
-    name:{
-        type: String,
-        required: [ true, "product.name.required"],
-        trim: true,
-        maxLength: [100,'product.name.exceded']
-    },
+   
     price:{
         type: Number,
         required: [ true, "product.price.required"],
         maxLength: [5,'product.price.exceded'],
         default: 0.0
     },
-    description:{
-        type: String,
-        required:[ true, "product.description.required"]
-    },
+    texts:[
+        {
+            lang:{
+                type: String,
+                required: true
+            },
+            description:{
+                type: String,
+                required:[ true, "product.description.required"]
+            },
+            name:{
+                type: String,
+                required: [ true, "product.name.required"],
+                trim: true,
+                maxLength: [100,'product.name.exceded']
+            },
+        }
+    ],
     ratings:{
         type: Number,
         default: 0,
@@ -30,12 +39,14 @@ const dataSchema = new Schema({
         }
     ],
     category:{
-        type: String,
-        required: [true, "product.category.required"]
+        type: Types.ObjectId,
+        required: true,
+        ref: 'Category'
     },
     subcategory:{
-        type: String,
-        required: [true, "product.category.required"]
+        type: Types.ObjectId,
+        required: true,
+        ref: 'SubCategory'
     },
     stock:{
         type: Number,

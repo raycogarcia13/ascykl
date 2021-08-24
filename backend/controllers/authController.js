@@ -25,16 +25,43 @@ exports.register = catchAsyncErrors(async (req,res,next) =>{
     sendMail(email, text, html, subject).catch(e => {
         console.log(e);
     })
-
+     let data = {
+        email:newed.email,
+        name: newed.name,
+        _id: newed._id
+     };
     res.json({
         status:"success",
         message:"mail.sended",
-        email:newed.email,
-        name: newed.name
+        data
     })
     // sendToken(newed, res);
 })
 
+// Verify User => /api/v1/verify
+exports.verify = catchAsyncErrors(async (req,res,next) =>{
+    const { pin, user } = req.body
+
+    if(!pin || !user)
+        return next(new ErrorHandler('verify.empty',400))
+
+    const verify = await User.findOne({
+        status: "Verify",
+        _id: user 
+    });
+    
+    if(!verify)
+        return next(new ErrorHandler('verify.error',401))
+    
+    if(verify.verifyPin != pin)
+        return next(new ErrorHandler('verify.pinerror',401))
+
+    verify.status = 'Available';
+    verify.verifyPin = null;
+    await verify.save();
+   
+    sendToken(verify, res);
+})
 // Login user => /api/v1/login
 exports.login =  catchAsyncErrors(async (req,res,next) =>{
     const {email, password} = req.body;

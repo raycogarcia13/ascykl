@@ -15,6 +15,8 @@ app.use(bodyParser.json({limit:'50mb'}));
 app.use(cookieParser())
 
 // routes import
+const base = require("./routes/base")
+app.use('/api/',base);
 const products = require("./routes/store/products")
 app.use('/api/v1',products);
 const auth = require("./routes/auth")

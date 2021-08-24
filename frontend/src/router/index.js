@@ -5,6 +5,7 @@ import Store from '@/pages/Store'
 import Detail from '@/pages/Detail'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
+import Verify from '@/pages/Verify'
 import StoreProducts from '@/pages/StoreProducts'
 import Admin from '@/pages/admin/Template'
 import Dashboard from '@/pages/admin/Dashboard'
@@ -34,6 +35,12 @@ export default new Router({
             path: '/register',
             name: 'Register',
             component: Register
+        },
+       {
+            path: '/verify/:id',
+            name: 'Verify',
+            component: Verify,
+            props:true
         },
        {
             path: '/store',

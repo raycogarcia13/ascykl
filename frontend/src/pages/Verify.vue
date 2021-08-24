@@ -1,60 +1,26 @@
 <template>
   <v-app>
       <v-main class="fill-height align-center">
-          <v-card flat class="mx-auto text-center align-center justify-center" :width="boxSize">
+          <v-card color="rgba(255,255,255,0)" flat class="mx-auto text-center align-center justify-center" :width="boxSize">
             <v-card-text>
               <v-avatar size="80" @click="()=>$router.push('/')">
                 <v-img :src="require('@/assets/images/logo.jpg')" />
               </v-avatar>
             </v-card-text>
-            
             <v-card-text class="px-15">
+            <h3>Inserte el pin enviado por correo</h3>
               <v-text-field
                 solo
                 light
-                rounded
                 dense
+                rounded
                 autocomplete
-                v-model="name"
+                placeholder="000000"
+                v-model="pin"
                 name="ascykl.name"
-                :label="$t('register.name')"
-                append-icon="mdi-pencil"
-              ></v-text-field>
-              <v-text-field
-                solo
-                light
-                rounded
-                dense
-                v-model="email"
-                name="ascykl.email"
-                :label="$t('register.email')"
-                append-icon="mdi-email"
-              ></v-text-field>
-              <v-text-field
-                solo
-                type="password"
-                light
-                rounded
-                dense
-                v-model="password"
-                autocomplete="false"
-                :label="$t('register.password')"
-                append-icon="mdi-lock"
-              ></v-text-field>
-              <v-text-field
-                solo
-                type="password"
-                light
-                name="ascykl.pass"
-                rounded
-                dense
-                v-model="repeat_password"
-                autocomplete="false"
-                :label="$t('register.repeat_password')"
-                append-icon="mdi-lock"
+                :label="$t('verify.pin')"
               ></v-text-field>
 
-                <v-checkbox v-model="accept" :label="$t('register.conditions')"/>
 
                <v-alert
                   color="red lighten-2"
@@ -68,8 +34,8 @@
                 </v-alert>
 
               <v-divider class="mb-5"></v-divider>
-              <v-btn rounded small block color="primary" @click="sendRegister">
-                Registarse
+              <v-btn rounded small block color="primary" @click="verify">
+                Validar
               </v-btn>
             </v-card-text>
 
@@ -85,14 +51,14 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: "App",
 
+  props:[
+    "id"
+  ],
   components: {
   },
 
   data: () => ({
-    email:'',
-    name:'',
-    password:'',
-    repeat_password:'',
+    pin:'',
     hash:null,
     accept:false,
     error:null
@@ -107,15 +73,17 @@ export default {
 
   methods: {
     ...mapActions('app', ['login','logout']),
-    sendRegister(){
-      let uri = 'register';
+    verify(){
+      let uri = 'verify';
       this.$axios.post(uri,{
-          name:this.name,
-          email:this.email,
-          password:this.password,
-          lang:this.$i18n.locale
+        user:this.id,
+        pin:this.pin
         }).then(res=>{
-          this.$router.push(`/verify/${res.data.data._id}`)
+          this.login(res);
+        if(res.data.user.role == 'Admin')
+          this.$router.push('/admin')  
+        else
+          this.$router.push('/store')
       }).catch(err => {
         this.error = err.response.data.error
       })

@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 let config ={
-  baseURL: '/api/v1'
+  baseURL: 'http://localhost:3000/api/v1'
+  // baseURL: '/api/v1'
 }
 
 let axiosO = axios.create(config);

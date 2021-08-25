@@ -12,12 +12,12 @@
                   v-model="model"
                   class="pa-1"
                   active-class="success"
-                  show-arrows
+                  :show-arrows="$vuetify.breakpoint.md"
                 >
                   <v-slide-item
                     v-for="n in 15"
                     :key="n"
-                    v-slot="{ active, toggle }"
+                    v-slot="{ active, toggle }" 
                   >
                     <v-card
                       :color="active ? undefined : 'grey lighten-1'"
@@ -53,7 +53,7 @@
                   v-model="model"
                   class="pa-1"
                   active-class="success"
-                  show-arrows
+                  :show-arrows="$vuetify.breakpoint.md"
                 >
                   <v-slide-item
                     v-for="n in 15"
@@ -116,7 +116,7 @@
                     v-model="model2"
                     class="pa-1"
                     active-class="success"
-                    show-arrows
+                    :show-arrows="$vuetify.breakpoint.md"
                   >
                     <v-slide-item v-slot="{ active, toggle }" v-for="(item) in categories" :key="item._id">
                       <v-card
@@ -124,7 +124,7 @@
                           class="ma-4"
                           :to="`/store/${item._id}`"
                         >
-                          <v-img width="200" height="200" contain  :src="`${$uri}categories/${item.image}`">
+                          <v-img :width="$vuetify.breakpoint.md?'200':'100'" :height="$vuetify.breakpoint.md?'200':'100'" contain  :src="`${$uri}categories/${item.image}`">
                           <v-row
                               class="fill-height"
                               align="end"

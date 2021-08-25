@@ -48,6 +48,15 @@
             <v-list-item-title class="subtitile-1">{{$t('nav.store')}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        
+        <v-list-item v-if="!auth" to="/login">
+          <v-list-item-icon class="justify-center">
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="subtitile-1">{{$t('nav.login')}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -60,7 +69,7 @@
       :class="{ expand: flat }"
     >
       <v-toolbar-title>
-        <v-avatar class="elevation-2">
+        <v-avatar v-if="!isXs" class="elevation-2">
           <v-img src="@/assets/images/logo.jpg" max-width="50px" />
         </v-avatar>
         {{$t('name')}}
@@ -71,7 +80,7 @@
         class="mr-4"
         v-if="isXs"
       />
-      <div v-else>
+      <div v-if="!isXs">
        
        <v-menu open-on-hover bottom :offset-y="true" :offset-x="false">
             <template v-slot:activator="{ on, attrs }">
@@ -106,8 +115,8 @@
         <v-btn rounded outlined text @click="$vuetify.goTo('#contact')">
           <span class="mr-2">{{$t('nav.contact')}}</span>
         </v-btn>
-         <login-btn />
       </div>
+      <login-btn />
     </v-app-bar>
   </div>
 </template>
@@ -124,6 +133,7 @@
 </style>
 
 <script>
+import {mapState} from 'vuex'
 import LoginBtn from './LoginBtn.vue';
 export default {
   components: { LoginBtn },
@@ -139,6 +149,9 @@ export default {
   props: {
     color: String,
     flat: Boolean,
+  },
+  computed: {
+    ...mapState('app',['auth'])
   },
   methods: {
     onResize() {

@@ -27,7 +27,7 @@
           v-for="([icon, text, link], i) in items"
           :key="i"
           link
-          @click="$vuetify.goTo(link)"
+          :to="link"
         >
           <v-list-item-icon class="justify-center">
             <v-icon>{{ icon }}</v-icon>
@@ -49,7 +49,7 @@
     >
     <router-link to="/">
       <v-toolbar-title>
-        <v-avatar class="elevation-2">
+        <v-avatar v-if="!isXs" class="elevation-2">
           <v-img src="@/assets/images/logo.jpg" max-width="50px" />
         </v-avatar>
         {{$t('name')}}
@@ -92,9 +92,9 @@
                 </v-list-item>
             </v-list>
         </v-menu>
+      </div>
         <menuCart v-if="auth" :items="cartItems" />
         <login-btn />
-      </div>
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
         class="mr-4"
@@ -118,9 +118,9 @@ export default {
     drawer: null,
     isXs: false,
     items: [
-      ["mdi-home-outline", "Home", "#hero"],
-      ["mdi-information-outline", "Sobre", "#features"],
-      ["mdi-email-outline", "Contatos", "#contact"],
+      ["mdi-home-outline", "Home", "/"],
+      // ["mdi-information-outline", "Sobre", "#features"],
+      // ["mdi-email-outline", "Contatos", "#contact"],
     ],
     cartItems:[{
       name:"Perro caliente",

@@ -30,8 +30,8 @@
             </v-list-item>
         </v-list>
     </v-menu>
-        <login-btn />
       </div>
+        <login-btn />
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
         class="mr-4"

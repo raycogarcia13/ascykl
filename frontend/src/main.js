@@ -15,9 +15,11 @@ Vue.config.productionTip = false
 Vue.use({
     install (Vue) {
       Vue.prototype.$axios = axios
-      Vue.prototype.$uri = "http://localhost:3000/"
+      Vue.prototype.$uri = '/static'
   }
 })
+
+console.log(window.location.href);
 
 Vue.use(VueI18n);
 

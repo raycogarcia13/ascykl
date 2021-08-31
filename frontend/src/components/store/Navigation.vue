@@ -62,12 +62,14 @@
               rounded
               light
               hide-details
+              v-model="searchValue"
               dense
               style="max-width:30%"
               color="purple darken-2"
               :label="$t('search')"
               append-icon="mdi-send"
-              @click:append="search"
+              @click:append="goSearch"
+              v-on:keyup.enter="goSearch"
             ></v-text-field>
       </template>
       <v-spacer></v-spacer>
@@ -93,7 +95,7 @@
             </v-list>
         </v-menu>
       </div>
-        <menuCart v-if="auth" :items="cartItems" />
+        <menuCart v-if="auth" />
         <login-btn />
       <v-app-bar-nav-icon
         @click.stop="drawer = !drawer"
@@ -101,12 +103,30 @@
         v-if="isXs"
       />
     </v-app-bar>
+      <v-snackbar
+        v-model="toastValue"
+        :timeout="time_toast"
+        :color="color_toast"
+        dark
+      >
+        {{ $t(text_toast) }}
+
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            text
+            v-bind="attrs"
+            @click="toastValue = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
   </div>
 </template>
 
 <script>
 import menuCart from "./CartMenu.vue"
-import {mapState,mapMutations} from 'vuex'
+import {mapState,mapMutations, mapActions} from 'vuex'
 import LoginBtn from '../home/LoginBtn.vue';
 
 export default {
@@ -119,32 +139,36 @@ export default {
     isXs: false,
     items: [
       ["mdi-home-outline", "Home", "/"],
-      // ["mdi-information-outline", "Sobre", "#features"],
-      // ["mdi-email-outline", "Contatos", "#contact"],
     ],
-    cartItems:[{
-      name:"Perro caliente",
-      product:"8761987987",
-      picture: "http://localhost:3000/6767898",
-      price:"45.7",
-      quantity: "5"
-    },{
-      name:"Bicicleta",
-      product:"98754",
-      picture: "http://localhost:3000/6767898",
-      price:"152",
-      quantity: "1"
-    }]
   }),
   computed: {
-    ...mapState('app',['searched','auth'])
+    ...mapState('app',['auth']),
+    ...mapState('products',['searched','search']),
+    ...mapState('toast',['toast','text_toast','time_toast','color_toast']),
+    searchValue:{
+      get(){
+        return this.search;
+      },
+      set(newValue){
+        return this.$store.dispatch('products/setSearchValue',newValue)
+      }
+    },
+    toastValue:{
+      get(){
+        return this.toast;
+      },
+      set(newValue){
+        return this.$store.dispatch('toast/setToast',newValue)
+      }
+    }
   },
   props: {
     color: String,
     flat: Boolean,
   },
   methods: {
-    ...mapMutations('app',['TOGGLE_SEARCH']),
+    ...mapMutations('products',['TOGGLE_SEARCH','SET_SEARCH','SET_SUBCATEGORY','SET_CATEGORY']),
+    ...mapActions('products',['findProducts']),
     changeLocale(item){
       this.$i18n.locale = item;
       localStorage.setItem('lang',item);
@@ -152,10 +176,16 @@ export default {
     onResize() {
       this.isXs = window.innerWidth < 850;
     },
-    search(){
-      alert('a bsucarr')
-    },
+    goSearch(){
+      
+      if(this.$router.name != 'Category')
+        this.$router.push(`/products?keyword=${this.search}`);
+      
+      this.SET_SUBCATEGORY(''),
+      this.SET_CATEGORY(''),
 
+      this.findProducts()
+    },
     isMd(){
       return window.innerWidth >= 960
     }

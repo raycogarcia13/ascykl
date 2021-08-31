@@ -7,6 +7,7 @@
                   :key="item._id"
                   cols="12"
                   md="3"
+                  sm="6"
                 >
                   <product :product="item"/>
                 </v-col>

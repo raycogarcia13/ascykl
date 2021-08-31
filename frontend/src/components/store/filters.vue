@@ -1,34 +1,39 @@
 <template>
-    <v-card flat>
-        <v-card-title v-if="actuales.length">Grupos</v-card-title>
-        <v-card-text class="pa-0" v-if="actuales.length">
-            <v-list dense rounded>
-                <v-list-item v-for="(item) in actuales" :key="`cat${item._id}`"  
-                    class="text--primary" :to="`/store/${category}/${item._id}`">
-                    <v-list-item-content>
-                        <v-list-item-title v-text="textI18(item.texts).name"/>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-        </v-card-text>
-        <v-card-title>Categorías</v-card-title>
-        <v-card-text class="pa-0">
-            <v-list dense rounded>
-                <v-list-item v-for="(item) in categories" :key="`${item._id}`"  
-                    class="text--primary" :to="`/store/${item._id}`">
-                    <v-list-item-content>
-                        <v-list-item-title v-text="textI18(item.texts).name"/>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-        </v-card-text>
+    <v-card flat color="rgba(255,255,255,0)">
+        <v-list-group v-if="actuales.length" :value="!menu" no-action>
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>{{$t('store.subcategories')}}</v-list-item-title>
+            </v-list-item-content>
+          </template>
+            <v-list-item v-for="(item) in actuales" :key="`cat${item._id}`"  
+                :class="{'text--primary':!menu}" :to="`/products/${category}/${item._id}`">
+                <v-list-item-content>
+                    <v-list-item-title v-text="textI18(item.texts).name"/>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list-group>
+        <v-list-group :value="!menu" no-action>
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>{{$t('store.categories')}}</v-list-item-title>
+            </v-list-item-content>
+          </template>
+            <v-list-item v-for="(item) in categories" :key="`${item._id}`"  
+                :class="{'text--primary':!menu}" :to="`/products/${item._id}`">
+                <v-list-item-content>
+                    <v-list-item-title v-text="textI18(item.texts).name"/>
+                </v-list-item-content>
+            </v-list-item>
+        </v-list-group>
+
         <v-divider></v-divider>
-        <v-card-title>Filtros</v-card-title>
+        <v-card-title>{{$t('store.filters.title')}}</v-card-title>
         <v-card-text>
             <v-list dense>
                 <v-list-item>
                     <v-list-item-content>
-                        <v-checkbox v-model="stock" :label="`Solo productos en Stock`"
+                        <v-checkbox v-model="stockValue" :label="$t('store.filters.only_stock')"
                             ></v-checkbox>
                     </v-list-item-content>
                 </v-list-item>
@@ -38,16 +43,17 @@
 </template>
 
 <script>
+import {mapState,mapMutations} from 'vuex'
 export default {
-    props:['category','subcategory'],
+    props:['category','subcategory','menu'],
     data() {
         return {
             subcategories:[],
             categories:[],
-            stock:false
         }
     },
     computed: {
+        ...mapState('products',['stock']),
         actuales(){
             if(!this.category)
                 return [];
@@ -58,9 +64,18 @@ export default {
                     ac.push(it)
             })
             return ac;
+        },
+        stockValue:{
+            get(){
+                return this.stock;
+            },
+            set(newValue){
+                return this.TOGGLE_STOCK(newValue)
+            }
         }
     },
     methods: {
+        ...mapMutations('products',['TOGGLE_STOCK']),
         loadData(){
             this.loadSubCategories();
             this.loadCategories();

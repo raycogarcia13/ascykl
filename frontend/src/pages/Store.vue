@@ -5,7 +5,7 @@
     <v-main class="mt-5">
       <v-row no-gutters>
         <v-col md="12" cols="12">
-          <v-card flat color="rgba(255,255,255,0)" class="mb-n5 mt-n5">
+          <!-- <v-card flat color="rgba(255,255,255,0)" class="mb-n5 mt-n5">
             <v-card-title>Productos más vendidos</v-card-title>
             <v-card-text>
               <v-slide-group
@@ -44,87 +44,59 @@
                   </v-slide-item>
                 </v-slide-group>
             </v-card-text>
-          </v-card>
+          </v-card> -->
 
           <v-card flat color="rgba(255,255,255,0)" class="mb-n5">
-            <v-card-title>Últimos Productos agregados</v-card-title>
+            <v-card-title>{{$t('store.latestProducts')}}</v-card-title>
             <v-card-text>
               <v-slide-group
-                  v-model="model"
+                  v-model="model3"
                   class="pa-1"
                   active-class="success"
-                  :show-arrows="$vuetify.breakpoint.md"
+                  :show-arrows="!$vuetify.breakpoint.mobile"
                 >
                   <v-slide-item
-                    v-for="n in 15"
-                    :key="n"
-                    v-slot="{ active, toggle }"
+                    v-for="(item) in latest"
+                    :key="'lat'+item._id"
                   >
-                    <v-card
-                      :color="active ? undefined : 'grey lighten-1'"
-                      class="ma-4"
-                      height="150"
-                      width="20vw"
-                      @click="toggle"
-                    >
-                      <v-row
-                        class="fill-height"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-scale-transition>
-                          <v-icon
-                            v-if="active"
-                            color="white"
-                            size="48"
-                            v-text="'mdi-close-circle-outline'"
-                          ></v-icon>
-                        </v-scale-transition>
-                      </v-row>
-                    </v-card>
+                   <v-card 
+                          color="grey lighten-1"
+                          class="ma-4 pa-1  "
+                          :to="`/product/${item._id}`">
+                        <v-img height="150" :width="$vuetify.breakpoint.mobile?'100':'200'" :src="image(item)" cover>
+                        <v-row
+                              class="fill-height"
+                              align="end"
+                              justify="center"
+                            >
+                              <v-app-bar dense color="rgba(255,255,255,0.5)" class="mt-n10">
+                                  <span class="black--text subtitle-1 font-weight-black font-weight-bold" > {{textI18(item).name}}</span>
+                                <v-spacer></v-spacer>
+                                  <span class="black--text subtitle-2" >${{item.price}}</span>
+                              </v-app-bar>
+                          </v-row>
+                        </v-img>
+                   </v-card>
                   </v-slide-item>
                 </v-slide-group>
             </v-card-text>
           </v-card>
           <v-card flat color="rgba(255,255,255,0)">
+            <v-card-title>{{$t('store.categories')}}</v-card-title>
             <v-card-text>
-              <!-- <v-row>
-                <v-col cols="12" md="3" v-for="(item) in categories" :key="item._id">
-                  <v-card
-                          color="grey lighten-1"
-                          class="ma-4"
-                          :to="`/store/${item._id}`"
-                        >
-
-                          <v-img max-width="100%" height="200" contain  :src="`${$uri}categories/${item.image}`">
-                           <v-row
-                              class="fill-height"
-                              align="end"
-                              justify="center"
-                            >
-                              <v-app-bar dense color="rgba(255,255,255,0.5)">
-                                <v-spacer></v-spacer>
-                                  <span class="black--text subtitle-1 font-weight-black font-weight-bold" >{{textI18(item).name}}</span>
-                                <v-spacer></v-spacer>
-                              </v-app-bar>
-                           </v-row>
-                          </v-img>
-                  </v-card>
-                </v-col>
-              </v-row> -->
                 <v-slide-group
                     v-model="model2"
                     class="pa-1"
                     active-class="success"
-                    :show-arrows="$vuetify.breakpoint.md"
+                    :show-arrows="!$vuetify.breakpoint.mobile"
                   >
                     <v-slide-item v-slot="{ active, toggle }" v-for="(item) in categories" :key="item._id">
                       <v-card
                           color="grey lighten-1"
                           class="ma-4"
-                          :to="`/store/${item._id}`"
+                          :to="`/products/${item._id}`"
                         >
-                          <v-img :width="$vuetify.breakpoint.md?'200':'100'" :height="$vuetify.breakpoint.md?'200':'100'" contain  :src="`${$uri}categories/${item.image}`">
+                          <v-img :width="$vuetify.breakpoint.mobile?'100':'200'" :height="$vuetify.breakpoint.mobile?'100':'200'" contain  :src="`${$uri}categories/${item.image}`">
                           <v-row
                               class="fill-height"
                               align="end"
@@ -132,7 +104,7 @@
                             >
                               <v-app-bar dense color="rgba(255,255,255,0.5)">
                                 <v-spacer></v-spacer>
-                                  <span class="black--text subtitle-1 font-weight-black font-weight-bold" >{{textI18(item).name}}</span>
+                                  <span class="black--text subtitle-1 font-weight-black font-weight-bold" > {{textI18(item).name}}</span>
                                 <v-spacer></v-spacer>
                               </v-app-bar>
                           </v-row>
@@ -141,6 +113,7 @@
                     </v-slide-item>
                   </v-slide-group>
             </v-card-text>
+            <v-card-title>{{$t('store.products')}}</v-card-title>
             <v-card-text class="pa-0">
               <products :products="products"/>
             </v-card-text>
@@ -191,8 +164,10 @@ export default {
     page:1,
     model: null,
     model2: null,
+    model3: null,
     categories:[],
     products:[],
+    latest:[],
   }),
   computed: {
   },
@@ -252,9 +227,23 @@ export default {
         this.products = res.data.data
       })
     },
+    loadLatest(){
+      let uri = `/products/latest`;
+      this.$axios.get(uri).then(res=>{
+        this.latest = res.data.data
+      })
+    },
+    image(product){
+      if(product.images.length){
+        return `${this.$uri}/products/${product.images[0].image_src}`;
+      }
+
+      return  `${this.$uri}/site/noPicture.png`;
+    },
     loadData(){
       this.loadCategories();
       this.loadProducts();
+      this.loadLatest();
     }
   },
 };

@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-app-bar dense flat height="40rem">
-            <v-btn plain @click.stop="drawer = !drawer">
+            <v-btn plain @click.stop="drawer = !drawer" v-if="!searched">
                 <v-icon>mdi-menu</v-icon>
                 Todo
             </v-btn>
@@ -18,7 +18,9 @@
                   color="primary darken-2"
                   :label="$t('search')"
                   append-icon="mdi-send"
+                  v-model="searchvalue"
                   class="d-flex d-md-none"
+                  @click:append="goSearch"
                 ></v-text-field>
                </v-slide-x-reverse-transition>
             <v-spacer></v-spacer>
@@ -32,8 +34,8 @@
             temporary
             absolute
             dark
+            src="@/assets/img/bgDrawer.jpg"
             >
-            <!-- src="@/assets/img/bgDrawer.jpg" -->
       <v-list>
         <v-list-item class="text-center" :to="to">
             <v-list-item-title v-html="name" />
@@ -52,14 +54,20 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <filters :category="category" :subcategory="subcategory" :menu="true"/>
     </v-navigation-drawer>
 
     </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
+import Filters from './filters.vue';
 export default {
+    components:{
+      Filters
+    },
+    props:['category','subcategory'],
     data() {
         return {
             drawer: false,
@@ -67,8 +75,16 @@ export default {
         }
     },
     computed: {
-        ...mapState('app',['searched',"user","auth"]),
-        
+        ...mapState('app',["user","auth"]),
+        ...mapState('products',['searched','search']),
+        searchvalue:{
+          get(){
+            return this.search;
+          },
+          set(newValue){
+            return this.$store.dispatch('products/setSearchValue',newValue)
+          }
+        },
         name(){
             let authenticated;
             if(this.auth)
@@ -81,8 +97,17 @@ export default {
         }
     },
     methods: {
-        ...mapMutations('app',['TOGGLE_SEARCH']),
+      ...mapMutations('products',['TOGGLE_SEARCH']),
+      ...mapActions('products',['findProducts']),
+      goSearch(){
+        if(this.$router.name != 'Category')
+          this.$router.push(`/products?keyword=${this.search}`);
         
+        this.SET_SUBCATEGORY(''),
+        this.SET_CATEGORY(''),
+
+        this.findProducts()
+      },
     },
     mounted() {
         

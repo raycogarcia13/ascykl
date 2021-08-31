@@ -13,7 +13,7 @@
           ></v-text-field>
           <v-spacer></v-spacer>
           <!-- dialog for create or update -->
-          <v-dialog v-model="dialog" max-width="700px" persistent>
+          <v-dialog v-model="dialog" max-width="800px" persistent>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="primary"
@@ -63,10 +63,14 @@
                                         v-model="editedItem.texts[i].name"
                                         :label="$t('admin.products.name') + ` (${item})`"
                                       ></v-text-field>
-                                    <v-textarea
+                                        <tiptap-vuetify style="height: 200px;"
+                                            v-model="editedItem.texts[i].description"
+                                            :extensions="extensions"
+                                          />
+                                    <!-- <v-textarea
                                         v-model="editedItem.texts[i].description"
                                         :label="$t('admin.products.description') + ` (${item})`"
-                                      ></v-textarea>
+                                      ></v-textarea> -->
                                 </v-card-text>
                               </v-card>
                             </v-tab-item>
@@ -220,7 +224,9 @@
   </div>
 </template>
  <script>
+ import { TiptapVuetify, Heading, Bold, Italic, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
  export default {
+  components: { TiptapVuetify },
   data() {
     return {
       data:[],
@@ -247,6 +253,26 @@
       defaultItem:{},
       dialog: false,
       dialogDelete: false,
+        extensions: [
+          History,
+          Blockquote,
+          Link,
+          Underline,
+          Italic,
+          ListItem,
+          BulletList,
+          OrderedList,
+          [Heading, {
+            options: {
+              levels: [1, 2, 3]
+            }
+          }],
+          Bold,
+          Code,
+          HorizontalRule,
+          Paragraph,
+          HardBreak
+        ],
     }
   },
   computed: {

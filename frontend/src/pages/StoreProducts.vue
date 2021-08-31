@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <navigation app color="secondary" :flat="true" />
-    <bar-nav />
+    <bar-nav :category="category" :subcategory="subcategory"/>
     <v-main class="mt-5">
       <v-row no-gutters>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" class="d-none d-md-flex">
          <filters :category="category" :subcategory="subcategory" />
         </v-col>
         <v-col md="9" cols="12">
@@ -36,6 +36,8 @@ import products from "../components/store/Products.vue";
 import foote from "../components/home/Footer";
 import BarNav from '../components/store/barNav.vue';
 import Filters from '../components/store/filters.vue';
+// import debounce from 'debounce';
+import { mapMutations, mapState, mapActions } from 'vuex';
 
 export default {
   name: "App",
@@ -54,22 +56,9 @@ export default {
     color: "",
     flat: null,
     page:1,
-    products:[],
   }),
   computed: {
-  },
-
-  created() {
-    const top = window.pageYOffset || 0;
-    if (top <= 60) {
-      this.color = "transparent";
-      this.flat = true;
-    }
-
-  },
-  async mounted() {
-    this.toTop();
-    this.loadProducts()
+    ...mapState('products',['products','search','query','stock']),
   },
 
   watch: {
@@ -82,15 +71,22 @@ export default {
         this.flat = true;
       }
     },
+    stock(){
+      this.findProducts()
+    },
     category(){
-      this.loadProducts();
+      this.SET_CATEGORY(this.category)
+      this.findProducts();
     },
     subcategory(){
-      this.loadProducts();
+      this.SET_SUBCATEGORY(this.subcategory)
+      this.findProducts();
     }
   },
 
   methods: {
+    ...mapMutations('products',['SET_QUERYVAL','SET_SUBCATEGORY','SET_CATEGORY']),
+    ...mapActions('products',['findProducts']),
     onScroll(e) {
       if (typeof window === "undefined") return;
       const top = window.pageYOffset || e.target.scrollTop || 0;
@@ -99,18 +95,26 @@ export default {
     toTop() {
       this.$vuetify.goTo(0);
     },
-    loadProducts(){
-      let uri = `/products?page=${this.page}`;
-      if(this.category)
-        uri+=`&category=${this.category}`
-      if(this.subcategory)
-        uri+=`&subcategory=${this.subcategory}`
-      
-      // let uri = `/products/${this.category}/${this.subcategory}`
-      this.$axios.get(uri).then(res=>{
-        this.products = res.data.data
-      })
+  },
+  created() {
+    const top = window.pageYOffset || 0;
+    if (top <= 60) {
+      this.color = "transparent";
+      this.flat = true;
     }
+
+    if(this.$route.query.page){
+      this.SET_QUERYVAL({key:'page',value:this.$route.query.page});
+    }
+    if(this.$route.query.keyword){
+      this.$store.dispatch('products/setSearchValue',this.$route.query.keyword)
+    }
+    this.SET_CATEGORY(this.category)
+    this.SET_SUBCATEGORY(this.subcategory)
+    this.findProducts();
+  },
+  async mounted(){
+    this.toTop();
   },
 };
 </script>

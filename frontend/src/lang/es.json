@@ -61,7 +61,24 @@
     }
   },
   "store":{
-    "more": "Ver más"
+    "more": "Ver más",
+    "moreSold": "Mas vendidos",
+    "latestProducts": "Últimos productos",
+    "categories": "Categorías",
+    "subcategories": "Grupos",
+    "products": "Productos",
+    "price": "Precio",
+    "stock": "Existencia",
+    "filters":{
+      "title":"Filtros",
+      "only_stock": "Solo productos en stock"
+    },
+    "cart":{
+      "add": "Agregar",
+      "add_to_cart": "Agregar al carrito",
+      "product_added": "Producto agregado al carrito",
+      "product_remove": "Producto eliminado del carrito"
+    }
   },
   "admin":{
     "user":{

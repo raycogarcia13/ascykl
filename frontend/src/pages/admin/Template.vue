@@ -64,6 +64,14 @@
       <v-divider></v-divider>
 
       <v-list dense>
+        <v-list-item link to="/admin">
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item link to="/admin/users">
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>

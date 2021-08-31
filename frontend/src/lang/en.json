@@ -1,3 +1,94 @@
 {
-  "test": "test"
+  "name": "ASCYKL",
+  "title": "Service & Representation International",
+  "descr": "EXPORT-IMPORT COMPANY",
+  "acro": "S.E.N.C",
+  "search": "Search",
+  "loading":"Loding..., please wait",
+  "cancel": "Cancel",
+  "save": "Save",
+  "nav":{
+    "home":"Home",
+    "about":"About",
+    "contact":"Contact",
+    "store":"Store",
+    "login": "Sign in",
+    "logout": "Sign out"
+  },
+  "login":{
+    "email": "Email",
+    "password": "Password"
+  },
+  "register":{
+    "email": "Email",
+    "name": "Name",
+    "password": "Password",
+    "repeat_password": "Repite password",
+    "conditions": "Accept the terms and use conditions of aplication",
+    "register": "Register"
+  },
+  "auth":{
+    "error":"Invalid credentials",
+    "sended": "Email sended",
+    "status":{
+      "Verify":"You must verify your user with a sended pin",
+      "Expired":"You're passwrod has expired, please change your password",
+      "Disabled":"Your user is disabled cause administration rules"
+    }
+  },
+  "home":{
+    "about":"We are a enterprise of Import / Export with bank account in the RBC Royal Bank Canada",
+    "more":"Know more",
+    "about_us":{
+      "professionalism":{
+        "title":"Profesionality",
+        "desc":"Our personal, highest cualify se caracteriza por un alto nivel de profesioanlidad, que se enfoca en cumplir con creces las exigencias de nuestros clientes"
+      },
+      "competitiveness":{
+        "title":"Competividad",
+        "desc":"No enfocamos en siempre estar por encima de nuestra competencia, mostrando alto nivel de competividad y un alto nivel de atención a nuetsros clientes"
+      },
+      "quality":{
+        "title":"Calidad",
+        "desc":"El alto nivel de calidad es exigencia en cada uno de nuestros produtos y servicios, lo que nos hace una empresa a tener en cuenta. Forma parte ya de nuestra familia."
+      }
+    },
+    "services":{
+      "title": "Nuestros servicios",
+      "export": "Exportamos lo que neceistes en un rango de tiempo absequible y en precios considerablemente bajos. La profesionalidad es nuestro lema para cada uno de nuestros servicios",
+      "products": "Vendemos productos de alta calidad a pedidos de nuestros clientes, usted suéñelo, nostros lo hacemos realidad",
+      "import": "Si está buscando una forma de poder importar algina mercancia o producto, no busque más, nostros somos la solución óptima a su necesidad. "
+    }
+  },
+  "store":{
+    "more": "Ver más"
+  },
+  "admin":{
+    "user":{
+      "delete": "Está seguro de querer eliminar este usuario"
+    },
+    "products":{
+      "title": "Gestión de Productos",
+      "new": "Insertar Producto",
+      "edit": "Editar Producto",
+      "name": "Nombre del producto",
+      "description": "Descripción",
+      "images":"Imágenes del producto",
+      "stock":"Cantidad existente",
+      "price": "Precio",
+      "category":"Categoría",
+      "subcategory":"Grupo"
+    },
+    "category":{
+      "title": "Gestión de categorías",
+      "new": "Insertar Categoría",
+      "edit": "Editar Categoría",
+      "created": "Categoría creada"
+    },
+    "subcategory":{
+      "new": "Insertar Grupo",
+      "edit": "Editar grupo",
+      "created": "Grupo creado"
+    }
+  }
 }

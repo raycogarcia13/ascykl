@@ -22,7 +22,6 @@ const dataSchema = new Schema({
                 type: String,
                 required: [ true, "product.name.required"],
                 trim: true,
-                maxLength: [100,'product.name.exceded']
             },
         }
     ],

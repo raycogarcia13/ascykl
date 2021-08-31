@@ -85,5 +85,37 @@ const localStorageUtil = {
     return localStorageUtil.set(value, CURRENT_ROUTE);
   }
 };
+// const sessionStorageUtil = {
+//   /**
+//    * CLEAR
+//    */
+//   clear(key) {
+//     if (sessionStorage && sessionStorage.getItem(key)) {
+//       return sessionStorage.removeItem(key);
+//     }
+//     return null;
+//   },
+
+//   /**
+//    * GETTERS
+//    */
+//   get(key) {
+//     if (sessionStorage && sessionStorage.getItem(key)) {
+//       return parse(sessionStorage.getItem(key)) || null;
+//     }
+//     return null;
+//   },
+//   /**
+//    * SETTERS
+//    */
+//   set(value, key) {
+//     if (sessionStorage) {
+//       return sessionStorage.setItem(key, stringify(value));
+//     }
+
+//     return null;
+//   }
+// };
 
 export default localStorageUtil;
+// module.export = sessionStorageUtil

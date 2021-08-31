@@ -2,7 +2,6 @@ import localStorageUtil from "../../utils/storageUtil"
 export default  {
     namespaced: true,
     state: {
-        searched:false,
         windowS:{ 
             width: window.innerWidth,
             height: window.innerHeight
@@ -11,11 +10,8 @@ export default  {
         user:{},
         token:''
     },
-
     mutations: {
-        TOGGLE_SEARCH(state) {
-            state.searched = !state.searched
-        }
+       
     },
 
     actions: {
@@ -40,11 +36,6 @@ export default  {
             state.auth = true;
             state.user = user
           }
-      }
-    },
-
-    getters: {
-
+      },
     }
-
 }

@@ -53,6 +53,18 @@ exports.get = catchAsyncErrors(async (req,res,next) =>{
     })
 })
 
+//get all => /api/v1/latest
+exports.latest = catchAsyncErrors(async (req,res,next) =>{
+    const all = await Product.find({}).sort({
+        createdAt:'desc'
+    }).limit(10);
+    
+    res.json({
+        status:"success",
+        data: all
+    })
+})
+
 // // get one product by id : /api/v1/diameter/:id 
 exports.find = catchAsyncErrors( async (req,res,next) =>{
     const data = await Product.findById(req.params.id);

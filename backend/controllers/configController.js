@@ -1,14 +1,14 @@
 const Config = require('../models/config');
 
 exports.init = async (req,res,next) =>{
-    const config = await Config.findOne({key:"database"});
-    if(config && config.value == "true"){
-        res.json({
-            status:"failed",
-            message:"Project is alredy config"
-        })
-    }
-    else{
+    // const config = await Config.findOne({key:"database"});
+    // if(config && config.value == "true"){
+    //     res.json({
+    //         status:"failed",
+    //         message:"Project is alredy config"
+    //     })
+    // }
+    // else{
         const {init} = require("../utils/seeder");
         let status = await init();
         if(status){
@@ -27,6 +27,6 @@ exports.init = async (req,res,next) =>{
                 message:"a error ocurred in process data, see a logs !!!"
             })
         }
-    }
+    // }
     
 }
